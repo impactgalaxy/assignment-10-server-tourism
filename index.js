@@ -34,16 +34,27 @@ async function run() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
 
-        const dbCollection = client.db("touristDB").collection("touristSpot");
+        const dbCollectionSpot = client.db("touristDB").collection("touristSpot");
+        const dbCollectionCountries = client.db("touristDB").collection("countries");
 
         app.post("/touristSpots", async (req, res) => {
             const body = req.body;
-            const result = await dbCollection.insertOne(body);
+            const result = await dbCollectionSpot.insertOne(body);
             res.send(result);
         });
 
         app.get("/touristSpots", async (req, res) => {
-            const result = await dbCollection.find().toArray();
+            const result = await dbCollectionSpot.find().toArray();
+            res.send(result);
+        });
+        app.get("/touristSpots/:country", async (req, res) => {
+            const country_name = req.params.country;
+            const query = { country: country_name };
+            const result = await dbCollectionSpot.find(query).toArray();
+            res.send(result);
+        })
+        app.get("/countries", async (req, res) => {
+            const result = await dbCollectionCountries.find().toArray();
             res.send(result);
         })
 
