@@ -40,6 +40,11 @@ async function run() {
             const body = req.body;
             const result = await dbCollection.insertOne(body);
             res.send(result);
+        });
+
+        app.get("/touristSpots", async (req, res) => {
+            const result = await dbCollection.find().toArray();
+            res.send(result);
         })
 
 
