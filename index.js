@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const port = process.env.PORT || 5000;
 const app = express();
 
@@ -47,6 +47,13 @@ async function run() {
             const result = await dbCollectionSpot.find().toArray();
             res.send(result);
         });
+
+        app.get("/touristSpots/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await dbCollectionSpot.find(query).toArray();
+            res.send(result);
+        })
         app.get("/touristSpots/:country", async (req, res) => {
             const country_name = req.params.country;
             const query = { country: country_name };
