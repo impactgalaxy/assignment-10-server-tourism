@@ -67,15 +67,14 @@ async function run() {
                 res.send(result);
             }
 
-        })
-
-        app.get("/touristSpots/:country", async (req, res) => {
-            const country_name = req.params.country.trim();
-            console.log("This is country", typeof (country_name), country_name.length);
-            const query = { country: country_name };
-            const result = await dbCollectionSpot.find(query).toArray();
+        });
+        app.delete("/touristSpots/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await dbCollectionSpot.deleteOne(query);
             res.send(result);
         })
+
         app.get("/countries", async (req, res) => {
             const result = await dbCollectionCountries.find().toArray();
             res.send(result);
