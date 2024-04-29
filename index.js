@@ -103,6 +103,11 @@ async function run() {
         app.get("/countries", async (req, res) => {
             const result = await dbCollectionCountries.find().toArray();
             res.send(result);
+        });
+        app.post("/countries", async (req, res) => {
+            const countryInfo = req.body;
+            const result = await dbCollectionCountries.insertOne(countryInfo);
+            res.send(result);
         })
 
 
