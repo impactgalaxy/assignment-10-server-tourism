@@ -41,6 +41,7 @@ async function run() {
 
         const dbCollectionSpot = client.db("touristDB").collection("touristSpot");
         const dbCollectionCountries = client.db("touristDB").collection("countries");
+        const dbCollectionReviews = client.db("touristDB").collection("reviews");
 
         // create document
         app.post("/touristSpots", async (req, res) => {
@@ -108,7 +109,12 @@ async function run() {
             const countryInfo = req.body;
             const result = await dbCollectionCountries.insertOne(countryInfo);
             res.send(result);
-        })
+        });
+        app.post("/userReviews", async (req, res) => {
+            const reviews = req.body;
+            const result = await dbCollectionReviews.insertOne(reviews);
+            res.send(result);
+        });
 
 
 
