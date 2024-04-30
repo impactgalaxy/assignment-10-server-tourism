@@ -115,6 +115,10 @@ async function run() {
             const result = await dbCollectionReviews.insertOne(reviews);
             res.send(result);
         });
+        app.get("/userReviews", async (req, res) => {
+            const result = await dbCollectionReviews.find().toArray();
+            res.send(result);
+        });
 
 
 
